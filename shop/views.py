@@ -17,6 +17,6 @@ def product_list(request, category_slug=None):
 
 
 # for view single product
-def product_detail(request, pk, slug):
-    product = get_object_or_404(Product, id=pk, slug=slug, available=True)
+def product_detail(request, id, slug):
+    product = get_object_or_404(Product, pk=id, slug=slug, available=True)
     return render(request, 'shop/product/detail.html', {'product': product})

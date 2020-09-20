@@ -1,17 +1,38 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}
+    {% if category %}{{ category.name }}{% else %}Products{% endif %}
+{% endblock %}
+{% block content %}
+    <div class="col-lg-3">
+        <div class="list-group">
+            <ul>
+                <li {% if not category %}class="selected"{% endif %}>
+                    <a href="{% url "product_list" %}">All</a>
+                </li>
+                {% for c in categories %}
+                    <li {% if category.slug == c.slug %}class="selected"{% endif %}>
+                        <a href="{{ c.get_absolute_url }}">{{ c.name }}</a>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+
 
     <div class="col-lg-4 col-md-6 mb-4">
         <div class="card h-100">
-            <a href="#"><img class="card-img-top" src="http://placehold.it/700x400" alt=""></a>
-            <div class="card-body">
-                <h4 class="card-title">
-                    <a href="#">Item One</a>
-                </h4>
-                <h5>$24.99</h5>
-                <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet numquam
-                    aspernatur!</p>
-            </div>
-            <div class="card-footer">
-                <small class="text-muted">&#9733; &#9733; &#9733; &#9733; &#9734;</small>
-            </div>
-        </div>
+            {% for product in products %}
+                <a href="{{ product.get_absolute_url }}">
+                    <img class="card-img-top"
+                         src="{% if product.image %}{{ product.image.url }}{% else %}No image{% endif %}">
+                </a>
+                <h1>{% if category %}{{ category.name }}{% else %}Products{% endif %}</h1>
+
+                <a href="{{ product.get_absolute_url }}">{{ product.name }}</a><br>
+                ${{ product.price }}
+                </div>
+            {% endfor %}
     </div>
+
+{% endblock content %}
