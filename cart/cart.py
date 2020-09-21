@@ -29,6 +29,7 @@ class Cart(object):
             self.cart[product_id]['quantity'] = quantity
         else:
             self.cart[product_id]['quantity'] += quantity  # increment the quantity
+        self.save()  # saving the state of the quantity after update
 
     # to save the card
     def save(self):
