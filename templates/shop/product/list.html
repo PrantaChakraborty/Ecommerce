@@ -3,6 +3,7 @@
 {% block title %}
     {% if category %}{{ category.name }}{% else %}Products{% endif %}
 {% endblock %}
+
 {% block content %}
 
     <div class="row">
@@ -12,12 +13,13 @@
                 <h3>Categories</h3>
 
                 {% if not category %}{% endif %}
-                <a class="list-group-item" href="{% url "product_list" %}">All</a>
+                <a class="list-group-item"   href="{% url "product_list" %}">All</a>
 
                 {% for c in categories %}
-                    {% if category.slug == c.slug %}class="selected"{% endif %}
+                    <p
+                    {% if category.slug == c.slug %} style="background: yellow" {% endif %}>
                     <a class="list-group-item" href="{{ c.get_absolute_url }}">{{ c.name }}</a>
-
+                    </p>
                 {% endfor %}
             </div>
 
@@ -61,7 +63,7 @@
 
                             <a href="{{ product.get_absolute_url }}">
                                 <img class="card-img-top"
-                                     src="{% if product.image %}{{ product.image.url }}{% else %}No image{% endif %}">
+                                     src="{% if product.image %}{{ product.image.url }}{% else %}{% static "static/image/no_image.png" %}{% endif %}">
                             </a>
                             <div class="card-body">
                                 <h4 class="card-title">

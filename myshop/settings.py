@@ -39,6 +39,7 @@ INSTALLED_APPS = [
 
     # local
     'shop.apps.ShopConfig',
+    'cart.apps.CartConfig', # for cart
 ]
 
 MIDDLEWARE = [
@@ -129,3 +130,7 @@ STATICFILES_FINDERS = [
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
+
+
+# for session to create shopping cart
+CART_SESSION_ID = 'cart'
