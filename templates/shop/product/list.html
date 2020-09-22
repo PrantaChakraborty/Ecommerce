@@ -17,7 +17,7 @@
 
                 {% for c in categories %}
                     <p
-                    {% if category.slug == c.slug %} style="background: yellow" {% endif %}>
+                    {% if category.slug == c.slug %}  {% endif %}>
                     <a class="list-group-item" href="{{ c.get_absolute_url }}">{{ c.name }}</a>
                     </p>
                 {% endfor %}
@@ -27,18 +27,13 @@
         <!-- /.col-lg-3 -->
 
         <div class="col-lg-9">
-
-
-
             <div class="row">
                 {% for product in products %}
                     <div class="col-lg-4 col-md-6 mb-4">
-
                         <div class="card h-100">
-
                             <a href="{{ product.get_absolute_url }}">
                                 <img class="card-img-top"
-                                     src="{% if product.image %}{{ product.image.url }}{% else %}{% static "static/image/no_image.png" %}{% endif %}">
+                                     src="{% if product.image %}{{ product.image.url }}{% else %}{% static 'static/image/no_image.png' %}{% endif %}">
                             </a>
                             <div class="card-body">
                                 <h4 class="card-title">
@@ -48,15 +43,12 @@
                                 ${{ product.price }}
                             </div>
                         </div>
-
                     </div>
                 {% endfor %}
 
             </div>
             <!-- /.row -->
-
         </div>
         <!-- /.col-lg-9 -->
-
     </div>
 {% endblock content %}
