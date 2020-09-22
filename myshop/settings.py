@@ -39,7 +39,8 @@ INSTALLED_APPS = [
 
     # local
     'shop.apps.ShopConfig',
-    'cart.apps.CartConfig', # for cart
+    'cart.apps.CartConfig',  # for adding items in cart
+    'orders.apps.OrdersConfig'  # for accessing orders
 ]
 
 MIDDLEWARE = [
