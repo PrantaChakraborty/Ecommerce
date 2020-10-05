@@ -20,7 +20,7 @@ def order_create(request):
                                          quantity=item['quantity'])
             # clear the cart
             cart.clear()
-            order_created.delay(order.id)  # for sending confirmation email
+            order_created.delay(order.id)  # for sending confirmation email asynchronous task
             return render(request, 'orders/order/created.html', {'order': order})
 
     else:

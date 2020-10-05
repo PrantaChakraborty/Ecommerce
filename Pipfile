@@ -9,7 +9,8 @@ verify_ssl = true
 django = "*"
 psycopg2-binary = "*"
 pillow = "*"
-celery = "*"
+gevent = "*"
+celery = "==4.2"
 
 [requires]
 python_version = "3.7"
