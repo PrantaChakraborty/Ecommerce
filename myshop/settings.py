@@ -136,3 +136,12 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
 
 # for session to create shopping cart
 CART_SESSION_ID = 'cart'
+
+
+# for email
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'prantachakraborty46@gmail.com'
+EMAIL_HOST_PASSWORD = "4422pranta"
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
