@@ -12,18 +12,21 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 
 from pathlib import Path
 import os
+import environ
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
-
+# for environment
+env = environ.Env()
+environ.Env.read_env()
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'y-6#tddjty8kqm+7zhs@fldvqn((xtyr+tzg6)4$!9do15kbei'
+SECRET_KEY = env("ENV_SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = env('DEBUG')
 
 ALLOWED_HOSTS = []
 
@@ -80,11 +83,11 @@ WSGI_APPLICATION = 'myshop.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'myshop',
-        'USER': 'postgres',
-        'PASSWORD': 'pranta',
-        'HOST': '127.0.0.1',
-        'PORT': '5432'
+        'NAME': env("DATABASE_NAME"),
+        'USER': env("DATABASE_USER"),
+        'PASSWORD': env("DATABASE_PASSWORD"),
+        'HOST': env("DATABASE_HOST"),
+        'PORT': env("DATABASE_PORT"),
     }
 }
 
@@ -139,9 +142,9 @@ CART_SESSION_ID = 'cart'
 
 
 # for email
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_HOST_USER = 'prantachakraborty46@gmail.com'
-EMAIL_HOST_PASSWORD = "4422pranta"
-EMAIL_PORT = 587
-EMAIL_USE_TLS = True
+EMAIL_BACKEND = env('email_backend')
+EMAIL_HOST = env('email_host')
+EMAIL_HOST_USER = env('email_host_user')
+EMAIL_HOST_PASSWORD = env('email_host_password')
+EMAIL_PORT = env('email_port')
+EMAIL_USE_TLS = env('email_use_tls')
