@@ -40,6 +40,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+    # 3rd party
+    'crispy_forms',
+
     # local
     'shop.apps.ShopConfig',
     'cart.apps.CartConfig',  # for adding items in cart
@@ -148,3 +151,7 @@ EMAIL_HOST_USER = env('email_host_user')
 EMAIL_HOST_PASSWORD = env('email_host_password')
 EMAIL_PORT = env('email_port')
 EMAIL_USE_TLS = env('email_use_tls')
+
+
+# crispy forms
+CRISPY_TEMPLATE_PACK = 'bootstrap4'

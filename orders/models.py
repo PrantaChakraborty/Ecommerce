@@ -5,12 +5,13 @@ from shop.models import Product
 
 
 class Order(models.Model):
-    first_name = models.CharField(max_length=50)
-    last_name = models.CharField(max_length=50)
+    name = models.CharField(max_length=100)
     email = models.EmailField()
     address = models.CharField(max_length=50)
     postal_code = models.CharField(max_length=20)
     city = models.CharField(max_length=100)
+    phone = models.CharField(max_length=11)
+    country = models.CharField(max_length=20)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
     paid = models.BooleanField(default=False)
