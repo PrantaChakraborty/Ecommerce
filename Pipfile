@@ -13,6 +13,7 @@ gevent = "*"
 celery = "==4.3"
 django-environ = "*"
 django-crispy-forms = "*"
+sslcommerz-python = "*"
 
 [requires]
 python_version = "3.7"

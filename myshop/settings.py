@@ -46,7 +46,8 @@ INSTALLED_APPS = [
     # local
     'shop.apps.ShopConfig',
     'cart.apps.CartConfig',  # for adding items in cart
-    'orders.apps.OrdersConfig'  # for accessing orders
+    'orders.apps.OrdersConfig',  # for accessing orders
+    'payments.apps.PaymentsConfig',  # for managing payments
 ]
 
 MIDDLEWARE = [
@@ -155,3 +156,7 @@ EMAIL_USE_TLS = env('email_use_tls')
 
 # crispy forms
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
+
+# for payment
+STORE_ID = env('store_id')
+STORE_PASSWORD = env('store_password')

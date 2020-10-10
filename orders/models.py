@@ -26,6 +26,9 @@ class Order(models.Model):
     def get_total_cost(self):
         return sum(item.get_cost() for item in self.items.all())
 
+    def get_total_quantity(self):
+        return sum(item.get_quantity() for item in self.items.all())
+
 
 # oder for every item
 class OrderItem(models.Model):
@@ -39,4 +42,8 @@ class OrderItem(models.Model):
 
 # used to calculate single item price
     def get_cost(self):
-        return self.price * self.quantity
+        total = self.price * self.quantity
+        return format(total, '0.2f')
+
+    def get_quantity(self):
+        return self.quantity
