@@ -50,7 +50,11 @@ def complete(request):
             val_id = payment_data['val_id']
             tran_id = payment_data['tran_id']
             messages.success(request, "Payment Complete")
-            return HttpResponseRedirect(reverse('payments:purchase', kwargs={'val_id': val_id, 'tran_id': tran_id}))
+            return HttpResponseRedirect(reverse('payments:purchase_complete', kwargs={'val_id': val_id, 'tran_id': tran_id}))
         elif status == 'FAILED':
             messages.success(request, 'Sorry! Payment Failed')
         return render(request, 'payments/complete.html', {})
+
+
+def purchase_complete(request, val_id, tran_id):
+    return render(request, 'payments/done.html', {'validation_id': val_id, 'transaction_id': tran_id})
