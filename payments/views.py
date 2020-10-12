@@ -18,12 +18,15 @@ def payment_process(request):
     store_id = settings.STORE_ID  # sandbox order id
     store_password = settings.STORE_PASSWORD  # sandbox order pass
     my_payment = SSLCSession(sslc_is_sandbox=True, sslc_store_id=store_id, sslc_store_pass=store_password)
-    status_url = request.build_absolute_uri(reverse('payments:complete'))
-    my_payment.set_urls(success_url=status_url, fail_url=status_url, cancel_url=status_url, ipn_url=status_url)
+    success_url = request.build_absolute_uri(reverse('payments:validation_check'))  # for checking the validation
+    fail_url = request.build_absolute_uri(reverse('payments:payment_fail'))  # if payment failed
+    cancel_url = request.build_absolute_uri(reverse('payments:payment_cancel'))  # if payment cancel
+    my_payment.set_urls(success_url=success_url, fail_url=fail_url, cancel_url=cancel_url, ipn_url=success_url)
     # get the total cost
-    total_cost = order.get_total_cost()
+    total_cost = order.get_total_cost()  # get the total cost from the method
     # get the total items
     total_items = order.get_total_quantity()
+
     my_payment.set_product_integration(total_amount=Decimal(total_cost), currency='BDT', product_category='Mixed',
                                        product_name='None', num_of_item=total_items, shipping_method='Courier',
                                        product_profile='None')
@@ -37,12 +40,12 @@ def payment_process(request):
                                  postcode=order.postal_code, country=order.country)
 
     response_data = my_payment.init_payment()
-    print(response_data)
+    # print(response_data)
     return redirect(response_data['GatewayPageURL'])
 
 
 @csrf_exempt
-def complete(request):
+def validation_check(request):
     if request.method == 'POST' or request.method == 'post':
         payment_data = request.POST
         status = payment_data['status']
@@ -50,12 +53,29 @@ def complete(request):
             val_id = payment_data['val_id']
             tran_id = payment_data['tran_id']
             messages.success(request, "Payment Complete")
-            return HttpResponseRedirect(reverse('payments:purchase_complete', kwargs={'val_id': val_id,
-                                                                                      'tran_id': tran_id}))
+            return HttpResponseRedirect(reverse('payments:payment_complete', kwargs={'val_id': val_id,
+                                                                                     'tran_id': tran_id}))
         elif status == 'FAILED':
             messages.success(request, 'Sorry! Payment Failed')
         return render(request, 'payments/complete.html', {})
 
 
-def purchase_complete(request, val_id, tran_id):
+# active if purchase complete
+def payment_complete(request, val_id, tran_id):
+    # get the id from session
+    order_id = request.session.get('order_id')
+    # get the user from the model using id
+    order = get_object_or_404(Order, pk=order_id)
+    order.paid = True
+    order.save()
     return render(request, 'payments/done.html', {'validation_id': val_id, 'transaction_id': tran_id})
+
+
+# if payment failed
+def payment_fail(request):
+    return render(request, 'payments/fail.html')
+
+
+# if payment cancelled
+def payment_cancel(request):
+    return render(request, 'payments/cancel.html')

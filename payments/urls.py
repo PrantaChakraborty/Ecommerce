@@ -4,8 +4,10 @@ from . import views
 app_name = 'payments'
 urlpatterns = [
     path('', views.payment_process, name='process'),
-    path('status/', views.complete, name='complete'),
-    path('confirm/<val_id>/<tran_id>/', views.purchase_complete, name='purchase_complete'),
+    path('status/', views.validation_check, name='validation_check'),
+    path('confirm/<val_id>/<tran_id>/', views.payment_complete, name='payment_complete'),
+    path('fail/', views.payment_fail, name='payment_fail'),
+    path('cancel/', views.payment_cancel, name='payment_cancel'),
 
 
 ]

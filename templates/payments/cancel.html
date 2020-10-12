@@ -1,0 +1,9 @@
+{% extends 'base.html'%}
+{% load static %}
+{% block title %}
+    Payment Failed
+{% endblock title %}
+{% block content %}
+    <h2>Sorry! Payment Canceled</h2>
+    <a href="{% url 'product_list' %}"> Goto Home</a>
+{% endblock content %}
