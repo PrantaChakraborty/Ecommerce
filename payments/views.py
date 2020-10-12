@@ -66,8 +66,8 @@ def payment_complete(request, val_id, tran_id):
     order_id = request.session.get('order_id')
     # get the user from the model using id
     order = get_object_or_404(Order, pk=order_id)
-    order.paid = True
-    order.save()
+    order.paid = True # if payment is successful
+    order.save() # saving the instance
     return render(request, 'payments/done.html', {'validation_id': val_id, 'transaction_id': tran_id})
 
 
