@@ -60,7 +60,7 @@
                 Your cart:
                     {{ total_items }} item{{ total_items|pluralize }},
                     ${{ cart.get_total_price }}
-                <a href="{% url 'cart_detail' %}">Go to cart.</a>
+                <a href="{% url 'cart:cart_detail' %}">Go to cart.</a>
             {% else %}
                 Your cart is empty.
             {% endif %}

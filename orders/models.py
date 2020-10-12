@@ -43,7 +43,7 @@ class OrderItem(models.Model):
 # used to calculate single item price
     def get_cost(self):
         total = self.price * self.quantity
-        return format(total, '0.2f')
+        return total
 
     def get_quantity(self):
         return self.quantity
