@@ -27,7 +27,7 @@ def order_create(request):
             cart.clear()
             order_created.delay(order.id)  # for sending confirmation email asynchronous task
             request.session['order_id'] = order.id
-            #return redirect(reverse('payments:process'))  # redirect to the payment app
+            return redirect(reverse('payments:process'))  # redirect to the payment app
 
     else:
         form = OrderCreateForm()

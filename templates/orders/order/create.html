@@ -20,7 +20,7 @@
     </div>
     <form action="." method="post" class="order-form">
         {{ form|crispy }}
-        <input type="submit" class="btn btn-primary" value="Place Order" {% url 'process' %}>
+        <input type="submit" class="btn btn-primary" value="Place Order">
         {% csrf_token %}
     </form>
 {% endblock %}
