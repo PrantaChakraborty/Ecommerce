@@ -7,6 +7,7 @@ from django.views.decorators.csrf import csrf_exempt
 
 from sslcommerz_python.payment import SSLCSession
 from orders.models import Order
+from .models import Payment  # saving payment instance
 # Create your views here.
 
 
@@ -27,6 +28,8 @@ def payment_process(request):
     total_cost = order.get_total_cost()  # get the total cost from the method
     # get the total items
     total_items = order.get_total_quantity()
+    # product names
+    product_names = order.get_all_products_name()
 
     my_payment.set_product_integration(total_amount=Decimal(total_cost), currency='BDT', product_category='Mixed',
                                        product_name='None', num_of_item=total_items, shipping_method='Courier',
@@ -62,21 +65,25 @@ def validation_check(request):
 
 
 # active if purchase complete
+@csrf_exempt
 def payment_complete(request, val_id, tran_id):
     # get the id from session
     order_id = request.session.get('order_id')
     # get the user from the model using id
     order = get_object_or_404(Order, pk=order_id)
-    order.paid = True # if payment is successful
-    order.save() # saving the instance
+    order.paid = True  # after successful payment
+    order.save()  # saving the instance
+
     return render(request, 'payments/done.html', {'validation_id': val_id, 'transaction_id': tran_id})
 
 
 # if payment failed
+@csrf_exempt
 def payment_fail(request):
     return render(request, 'payments/fail.html')
 
 
 # if payment cancelled
+@csrf_exempt
 def payment_cancel(request):
     return render(request, 'payments/cancel.html')

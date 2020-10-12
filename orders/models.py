@@ -29,6 +29,10 @@ class Order(models.Model):
     def get_total_quantity(self):
         return sum(item.get_quantity() for item in self.items.all())
 
+    def get_all_products_name(self):
+        product_list = []
+        return product_list.append(item.get_product_name() for item in self.items.all())
+
 
 # oder for every item
 class OrderItem(models.Model):
@@ -45,5 +49,10 @@ class OrderItem(models.Model):
         total = self.price * self.quantity
         return total
 
+# quantity for each product
     def get_quantity(self):
         return self.quantity
+
+# product name
+    def get_product_name(self):
+        return self.product.name
