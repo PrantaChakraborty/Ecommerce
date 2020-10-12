@@ -10,6 +10,7 @@ from orders.models import Order
 # Create your views here.
 
 
+# processing payments
 def payment_process(request):
     # get the id from session
     order_id = request.session.get('order_id')
