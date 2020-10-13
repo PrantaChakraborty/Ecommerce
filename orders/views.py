@@ -1,10 +1,12 @@
-from django.shortcuts import render
 from django.urls import reverse
-
+from django.conf import settings
+from django.http import HttpResponse
 from .models import OrderItem
 from .forms import OrderCreateForm
 from cart.cart import Cart
 from .tasks import order_created
+from django.template.loader import get_template  # for pdf
+from xhtml2pdf import pisa
 
 from django.shortcuts import render, redirect
 
@@ -43,3 +45,22 @@ def order_create(request):
 def admin_order_detail(request, order_id):
     order = get_object_or_404(Order, pk=order_id)
     return render(request, 'admin/orders/order/detail.html', {'order': order})
+
+
+
+
+@staff_member_required
+def admin_order_pdf(request, order_id):
+    order = get_object_or_404(Order, pk=order_id)
+    template_path = 'orders/order/pdf.html'
+    context = {'order': order}
+    response = HttpResponse(content_type='application/pdf')
+    response['Content-Disposition'] = 'filename="order_{}.pdf"'.format(order.id)
+    template = get_template(template_path)
+    html = template.render(context)
+    # create a pdf
+    pisa_status = pisa.CreatePDF(html, dest=response)
+    # if error then show some  view
+    if pisa_status.err:
+        return HttpResponse('we had some error')
+    return response

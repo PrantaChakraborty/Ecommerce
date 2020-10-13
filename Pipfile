@@ -14,6 +14,7 @@ celery = "==4.3"
 django-environ = "*"
 django-crispy-forms = "*"
 sslcommerz-python = "*"
+xhtml2pdf = "*"
 
 [requires]
 python_version = "3.7"

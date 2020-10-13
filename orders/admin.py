@@ -43,16 +43,25 @@ export_to_csv.short_description = 'Export to CSV'
 
 # for view each order in another page
 def order_detail(obj):
-    return mark_safe("<a href='{}'>View</a>".format(reverse('orders:admin_order_detail',args=[obj.id])))
+    return mark_safe("<a href='{}'>View</a>".format(reverse('orders:admin_order_detail', args=[obj.id])))
 
 
 order_detail.allow_tags = True
 
 
+# for printing invoice
+def order_pdf(obj):
+    return mark_safe("<a href='{}'>PDF</a>".format(reverse('orders:admin_order_pdf', args=[obj.id])))
+
+
+order_pdf.allow_tags = True
+order_pdf.short_description = 'PDF invoice'
+
+
 class OrderAdmin(admin.ModelAdmin):
     list_display = ['id', 'name', 'email', 'address',
                     'postal_code', 'city', 'country', 'phone',
-                    'paid', 'created', 'updated', order_detail]
+                    'paid', 'created', 'updated', order_detail, order_pdf]
     list_filter = ['paid', 'created', 'updated']
     inlines = [OrderItemInline]
     actions = [export_to_csv]  # added export to csv function
