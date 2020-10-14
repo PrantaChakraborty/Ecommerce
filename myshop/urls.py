@@ -21,10 +21,11 @@ from django.urls import path, include
 urlpatterns = [
     path('admin/', admin.site.urls),
     path(r'cart/', include('cart.urls')),
+    path(r'coupons/', include('coupons.urls')),
     path(r'', include('shop.urls')),
     path(r'orders/', include('orders.urls')),
     path(r'payments/', include('payments.urls')),
-    path(r'coupons/', include('coupons.urls')),
+
 ]
 
 if settings.DEBUG:
