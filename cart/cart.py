@@ -83,14 +83,14 @@ class Cart:
 
     # for getting the model details
     @property
-    def coupon(self):
+    def get_coupon(self):
         if self.coupon_id:
             return Coupon.objects.get(pk=self.coupon_id)
 
-    # calculating total discount amount
+    # calculating discount amount
     def get_discount(self):
-        if self.coupon:
-            return (self.coupon.discount / Decimal('100')) * self.get_total_price()
+        if self.get_coupon:
+            return (self.get_coupon.discount / Decimal('100')) * self.get_total_price()
         return Decimal('0')
 
     # retuning total cost after applying coupons
