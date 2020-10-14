@@ -11,7 +11,8 @@ class Cart:
         """
         self.session = request.session
         cart = self.session.get(settings.CART_SESSION_ID)
-        self.coupon_id = request.session.get('coupon_id')  # getting the coupon id from session
+        self.coupon_id = self.session.get('coupon_id')  # getting the coupon id from session
+       # print(self.coupon_id)
         if not cart:
             # save an empty cart
             cart = self.session[settings.CART_SESSION_ID] = {}
@@ -86,6 +87,7 @@ class Cart:
     def get_coupon(self):
         if self.coupon_id:
             return Coupon.objects.get(pk=self.coupon_id)
+        return None
 
     # calculating discount amount
     def get_discount(self):

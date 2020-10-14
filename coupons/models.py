@@ -10,7 +10,7 @@ class Coupon(models.Model):
     valid_to = models.DateTimeField()  # date for validity
 
     discount = models.IntegerField(validators=[MinValueValidator(0),
-                                               MaxValueValidator(0)])
+                                               MaxValueValidator(100)])
     active = models.BooleanField()  # to check active or not
 
     def __str__(self):

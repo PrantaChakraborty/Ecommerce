@@ -19,6 +19,7 @@ def coupon_apply(request):
                                         valid_from__lte=now,
                                         valid_to__gte=now,
                                         active=True)  # matching the coupon code with the model data
+
             request.session['coupon_id'] = coupon.id  # storing id into session
         except Coupon.DoesNotExist:
             request.session['coupon_id'] = None
