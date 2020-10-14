@@ -48,6 +48,8 @@ INSTALLED_APPS = [
     'cart.apps.CartConfig',  # for adding items in cart
     'orders.apps.OrdersConfig',  # for accessing orders
     'payments.apps.PaymentsConfig',  # for managing payments
+    'coupons.apps.CouponsConfig'  # for applying coupons code in purchase
+
 ]
 
 MIDDLEWARE = [
