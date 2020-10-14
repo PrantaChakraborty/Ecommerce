@@ -95,3 +95,24 @@ def payment_fail(request):
 def payment_cancel(request):
     return render(request, 'payments/cancel.html')
 
+
+def sent_email(order_id):
+    order = get_object_or_404(Order, pk=order_id)
+    # sending invoice by email after completion payment
+    subject = 'My Shop - Invoice no.{}'.format(order.id)
+    message = 'Please, find attached the invoice for your recent purchase.'
+    email = EmailMessage(subject, message, 'admin@myshop.com', [order.email])
+    # generating pdf invoice
+    template_path = 'orders/order/invoice.html'
+    context = {'order': order}
+    response = HttpResponse(content_type='application/pdf')
+    response['Content-Disposition'] = 'filename="order_{}.pdf"'.format(order.id)
+    template = get_template(template_path)
+    html = template.render(context)
+    # create a pdf
+    pisa_status = pisa.CreatePDF(html, dest=response)
+    # if error then show some  view
+    if pisa_status.err:
+        return HttpResponse('we had some error')
+    email.attach(response, 'application/pdf')
+    email.send()
