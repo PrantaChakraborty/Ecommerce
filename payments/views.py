@@ -1,13 +1,21 @@
 from django.conf import settings
+from django.http import HttpResponse
+
 from django.shortcuts import render,  get_object_or_404, redirect, HttpResponseRedirect
+from django.template.loader import get_template
+
 from django.urls import reverse
 from django.contrib import messages
 from decimal import Decimal
 from django.views.decorators.csrf import csrf_exempt
 
 from sslcommerz_python.payment import SSLCSession
+from xhtml2pdf import pisa
+
 from orders.models import Order
-from .models import Payment  # saving payment instance
+# from .models import Payment  # saving payment instance
+# to send email
+from django.core.mail import EmailMessage
 # Create your views here.
 
 
@@ -28,8 +36,6 @@ def payment_process(request):
     total_cost = order.get_total_cost()  # get the total cost from the method
     # get the total items
     total_items = order.get_total_quantity()
-    # product names
-    product_names = order.get_all_products_name()
 
     my_payment.set_product_integration(total_amount=Decimal(total_cost), currency='BDT', product_category='Mixed',
                                        product_name='None', num_of_item=total_items, shipping_method='Courier',
@@ -56,9 +62,10 @@ def validation_check(request):
         if status == 'VALID':
             val_id = payment_data['val_id']
             tran_id = payment_data['tran_id']
+            amount = payment_data['amount']
             messages.success(request, "Payment Complete")
             return HttpResponseRedirect(reverse('payments:payment_complete', kwargs={'val_id': val_id,
-                                                                                     'tran_id': tran_id}))
+                                                                                     'tran_id': tran_id, 'amount': amount}))
         elif status == 'FAILED':
             messages.success(request, 'Sorry! Payment Failed')
         return render(request, 'payments/complete.html', {})
@@ -66,7 +73,7 @@ def validation_check(request):
 
 # active if purchase complete
 @csrf_exempt
-def payment_complete(request, val_id, tran_id):
+def payment_complete(request, val_id, tran_id, amount):
     # get the id from session
     order_id = request.session.get('order_id')
     # get the user from the model using id
@@ -74,7 +81,7 @@ def payment_complete(request, val_id, tran_id):
     order.paid = True  # after successful payment
     order.save()  # saving the instance
 
-    return render(request, 'payments/done.html', {'validation_id': val_id, 'transaction_id': tran_id})
+    return render(request, 'payments/done.html', {'validation_id': val_id, 'transaction_id': tran_id, 'amount': amount})
 
 
 # if payment failed
@@ -87,3 +94,4 @@ def payment_fail(request):
 @csrf_exempt
 def payment_cancel(request):
     return render(request, 'payments/cancel.html')
+

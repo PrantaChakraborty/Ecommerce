@@ -40,7 +40,7 @@ Invoice no. {{ order.id }}<br>
     </tr>
     </tbody>
 </table>
-<span class="{% if order.paid %}paid{% else %}pending{% endif %}">
+<span class="{% if order.paid %}Paid{% else %}Pending{% endif %}">
 {% if order.paid %}Paid{% else %}Pending payment{% endif %}
 </span>
 </body>

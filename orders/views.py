@@ -11,9 +11,11 @@ from cart.cart import Cart
 from .tasks import order_created
 from .models import Order
 # for pdf
-from django.template.loader import get_template
+from django.template.loader import get_template, render_to_string
 from xhtml2pdf import pisa
 from django.contrib.staticfiles import finders
+
+
 
 # staff member to view order
 from django.contrib.admin.views.decorators import staff_member_required
@@ -83,10 +85,11 @@ def link_callback(uri, rel):
         )
     return path
 
+
 @staff_member_required
 def admin_order_pdf(request, order_id):
     order = get_object_or_404(Order, pk=order_id)
-    template_path = 'orders/order/pdf.html'
+    template_path = 'orders/order/invoice.html'
     context = {'order': order}
     response = HttpResponse(content_type='application/pdf')
     response['Content-Disposition'] = 'filename="order_{}.pdf"'.format(order.id)
