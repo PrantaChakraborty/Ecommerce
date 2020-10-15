@@ -15,9 +15,9 @@
                     <span>${{ item.total_price }}</span>
                 </li>
             {% endfor %}
-            {% if cart.coupon %}
+            {% if cart.get_coupon %}
                 <li>
-                    "{{ cart.coupon.code }}" ({{ cart.coupon.discount }}% off)
+                    "{{ cart.get_coupon.code }}" ({{ cart.get_coupon.discount }}% off)
                     <span>- ${{ cart.get_discount|floatformat:"2" }}</span>
                 </li>
             {% endif %}

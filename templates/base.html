@@ -59,7 +59,7 @@
             {% if cart|length > 0 %}
                 Your cart:
                     {{ total_items }} item{{ total_items|pluralize }},
-                    ${{ cart.get_total_price }}
+                    ${{ cart.get_total_price_after_discount }}
                 <a href="{% url 'cart:cart_detail' %}">Go to cart.</a>
             {% else %}
                 Your cart is empty.
