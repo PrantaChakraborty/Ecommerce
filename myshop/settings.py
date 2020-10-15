@@ -13,8 +13,7 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 from pathlib import Path
 import os
 import environ
-# for internationalization
-from django.utils.translation import gettext_lazy as _
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -163,5 +162,4 @@ CRISPY_TEMPLATE_PACK = 'bootstrap4'
 # for payment
 STORE_ID = env('store_id')
 STORE_PASSWORD = env('store_password')
-
 
