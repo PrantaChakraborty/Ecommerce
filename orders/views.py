@@ -29,7 +29,12 @@ def order_create(request):
     if request.method == 'POST':
         form = OrderCreateForm(request.POST)
         if form.is_valid():
-            order = form.save()
+            order = form.save(commit=False)
+            # checking if there any coupon or not
+            if cart.get_coupon:
+                order.coupon = cart.get_coupon
+                order.discount = cart.get_coupon.discount
+            order.save()
             for item in cart:
                 OrderItem.objects.create(order=order,
                                          product=item['product'],
@@ -79,10 +84,10 @@ def link_callback(uri, rel):
             return uri
 
     # make sure that file exists
-    if not os.path.isfile(path):
-        raise Exception(
-            'media URI must start with %s or %s' % (sUrl, mUrl)
-        )
+        if not os.path.isfile(path):
+            raise Exception(
+                'media URI must start with %s or %s' % (sUrl, mUrl)
+            )
     return path
 
 
