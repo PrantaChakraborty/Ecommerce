@@ -163,7 +163,4 @@ CRISPY_TEMPLATE_PACK = 'bootstrap4'
 STORE_ID = env('store_id')
 STORE_PASSWORD = env('store_password')
 
-# for recommendation
-REDIS_HOST = 'localhost'
-REDIS_PORT = '6373'
-REDIS_DB = 1
+
