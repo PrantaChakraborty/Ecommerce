@@ -15,6 +15,7 @@ django-environ = "*"
 django-crispy-forms = "*"
 sslcommerz-python = "*"
 xhtml2pdf = "*"
+redis = "*"
 
 [requires]
 python_version = "3.7"
